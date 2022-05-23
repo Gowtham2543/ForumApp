@@ -75,8 +75,8 @@ public class ProfileFragment extends Fragment {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     // Retrieving Data from firebase
                     String name = "" + dataSnapshot1.child("name").getValue();
-                    String emaill = "" + dataSnapshot1.child("email").getValue();
-                    //String emaill = "" + firebaseUser.getEmail();
+                    //String emaill = "" + dataSnapshot1.child("email").getValue();
+                    String emaill = "" + firebaseUser.getEmail();
                     String image = "" + dataSnapshot1.child("image").getValue();
                     // setting data to our text view
                     nam.setText(name);
