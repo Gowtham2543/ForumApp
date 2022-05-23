@@ -59,14 +59,10 @@ public class UsersFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 usersList.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    /*ModelUsers modelUsers = dataSnapshot1.getValue(ModelUsers.class);
-                    if (modelUsers.getUid() != null && !modelUsers.getUid().equals(firebaseUser.getUid())) {
+                    ModelUsers modelUsers = dataSnapshot1.getValue(ModelUsers.class);
+                    //if (modelUsers.getUid() != null && !modelUsers.getUid().equals(firebaseUser.getUid())) {
                         usersList.add(modelUsers);
-                        System.out.println("bfurbfuirbfrufbru");
-                    }*/
-                    ModelUsers modelUsers = new ModelUsers();
-                    modelUsers.name = firebaseUser.getDisplayName();
-                    modelUsers.email = firebaseUser.getEmail();
+                    //}
                     adapterUsers = new AdapterUsers(getActivity(), usersList);
                     recyclerView.setAdapter(adapterUsers);
                 }
