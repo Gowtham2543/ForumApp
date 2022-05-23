@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.nav_profile:
                     actionBar.setTitle("Profile");
-                    ProfileFragment fragment1 = new ProfileFragment();
+                    com.example.socialmedia.ProfileFragment fragment1 = new com.example.socialmedia.ProfileFragment();
                     FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction1.replace(R.id.content, fragment1);
                     fragmentTransaction1.commit();
