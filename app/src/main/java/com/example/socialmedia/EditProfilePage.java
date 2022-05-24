@@ -336,7 +336,7 @@ public class EditProfilePage extends AppCompatActivity {
                         }
                     });
                     if (key.equals("name")) {
-                        final DatabaseReference databaser = FirebaseDatabase.getInstance().getReference("Posts");
+                        final DatabaseReference databaser = FirebaseDatabase.getInstance("https://social-media-d83ed-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Posts");
                         Query query = databaser.orderByChild("uid").equalTo(uid);
                         query.addValueEventListener(new ValueEventListener() {
                             @Override

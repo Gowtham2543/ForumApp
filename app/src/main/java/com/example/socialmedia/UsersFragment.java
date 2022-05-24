@@ -66,9 +66,9 @@ public class UsersFragment extends Fragment {
                 usersList.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     ModelUsers modelUsers = dataSnapshot1.getValue(ModelUsers.class);
-                    //if (modelUsers.getUid() != null && !modelUsers.getUid().equals(firebaseUser.getUid())) {
+                    if (modelUsers.getUid() != null && !modelUsers.getUid().equals(firebaseUser.getUid())) {
                         usersList.add(modelUsers);
-                    //}
+                    }
                     adapterUsers = new AdapterUsers(getActivity(), usersList);
                     recyclerView.setAdapter(adapterUsers);
                 }
@@ -89,12 +89,12 @@ public class UsersFragment extends Fragment {
                 usersList.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     ModelUsers modelUsers = dataSnapshot1.getValue(ModelUsers.class);
-                    //if (!modelUsers.getUid().equals(firebaseUser.getUid())) {
-                        if (modelUsers.getName().toLowerCase().contains(s.toLowerCase()) /*||
-                                modelUsers.getEmail().toLowerCase().contains(s.toLowerCase())*/) {
+                    if (!modelUsers.getUid().equals(firebaseUser.getUid())) {
+                        if (modelUsers.getName().toLowerCase().contains(s.toLowerCase()) ||
+                                modelUsers.getEmail().toLowerCase().contains(s.toLowerCase())) {
                             usersList.add(modelUsers);
                         }
-                    //}
+                    }
                     adapterUsers = new AdapterUsers(getActivity(), usersList);
                     adapterUsers.notifyDataSetChanged();
                     recyclerView.setAdapter(adapterUsers);

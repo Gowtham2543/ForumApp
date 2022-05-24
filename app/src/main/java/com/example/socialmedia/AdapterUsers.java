@@ -40,13 +40,13 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.MyHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, final int position) {
-        //final String hisuid = list.get(position).getUid();
+        final String hisuid = list.get(position).getUid();
         String userImage = list.get(position).getImage();
         String username = list.get(position).getName();
-        //String usermail = list.get(position).getEmail();
+        String usermail = list.get(position).getEmail();
         //String usermail = firebaseAuth.getCurrentUser().getEmail();
         holder.name.setText(username);
-        //holder.email.setText(usermail);
+        holder.email.setText(usermail);
         try {
             Glide.with(context).load(userImage).into(holder.profiletv);
         } catch (Exception e) {

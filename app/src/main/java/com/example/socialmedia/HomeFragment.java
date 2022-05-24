@@ -82,7 +82,7 @@ public class HomeFragment extends Fragment {
         });
     }
     private void searchPosts(final String search) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://social-media-d83ed-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Posts");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

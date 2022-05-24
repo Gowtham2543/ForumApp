@@ -56,9 +56,8 @@ public class ProfileFragment extends Fragment {
         // getting current user data
         firebaseUser = firebaseAuth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance("https://social-media-d83ed-default-rtdb.asia-southeast1.firebasedatabase.app");
-        //databaseReference = firebaseDatabase.getReference("Users");
-        databaseReference = firebaseDatabase.getReference().child("Users");//.child(firebaseUser.getUid());
-
+        databaseReference = firebaseDatabase.getReference("Users");
+        //databaseReference = firebaseDatabase.getReference().child("Users");//.child(firebaseUser.getUid());
         // Initialising the text view and imageview
         avatartv = view.findViewById(R.id.avatartv);
         nam = view.findViewById(R.id.nametv);
@@ -66,17 +65,16 @@ public class ProfileFragment extends Fragment {
         fab = view.findViewById(R.id.fab);
         pd = new ProgressDialog(getActivity());
         pd.setCanceledOnTouchOutside(false);
-        //Query query = databaseReference.orderByChild("email").equalTo(firebaseUser.getEmail());
+        Query query = databaseReference.orderByChild("email").equalTo(firebaseUser.getEmail());
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //nam.setText("Gowtham");
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     // Retrieving Data from firebase
                     String name = "" + dataSnapshot1.child("name").getValue();
-                    //String emaill = "" + dataSnapshot1.child("email").getValue();
-                    String emaill = "" + firebaseUser.getEmail();
+                    String emaill = "" + dataSnapshot1.child("email").getValue();
+                    //String emaill = "" + firebaseUser.getEmail();
                     String image = "" + dataSnapshot1.child("image").getValue();
                     // setting data to our text view
                     nam.setText(name);
