@@ -1,12 +1,18 @@
 package com.example.socialmedia;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -73,6 +79,58 @@ public class UsersFragment extends Fragment {
 
             }
         });
+    }
+    private void searchusers(final String s) {
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://social-media-d83ed-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                usersList.clear();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    ModelUsers modelUsers = dataSnapshot1.getValue(ModelUsers.class);
+                    //if (!modelUsers.getUid().equals(firebaseUser.getUid())) {
+                        if (modelUsers.getName().toLowerCase().contains(s.toLowerCase()) /*||
+                                modelUsers.getEmail().toLowerCase().contains(s.toLowerCase())*/) {
+                            usersList.add(modelUsers);
+                        }
+                    //}
+                    adapterUsers = new AdapterUsers(getActivity(), usersList);
+                    adapterUsers.notifyDataSetChanged();
+                    recyclerView.setAdapter(adapterUsers);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main_menu, menu);
+        MenuItem item = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (!TextUtils.isEmpty(query)) {
+                    System.out.println(query);
+                    searchusers(query);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (!TextUtils.isEmpty(newText)) {
+                    searchusers(newText);
+                }
+                return false;
+            }
+        });
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
