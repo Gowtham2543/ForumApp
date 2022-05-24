@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="1.2K Likes"
-                android:textColor="@color/black" />
+                android:textColor="#6200EE" />
 
             <TextView
                 android:id="@+id/pcommentco"
@@ -102,7 +102,7 @@
                 android:layout_weight="1"
                 android:text="1.2K Comment"
                 android:textAlignment="textEnd"
-                android:textColor="@color/black" />
+                android:textColor="#6200EE" />
         </LinearLayout>
 
         <View
@@ -134,12 +134,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autoLink="all"
-
                 android:background="@color/white"
                 android:drawableStart="@drawable/ic_comment"
                 android:drawableLeft="@drawable/ic_comment"
                 android:padding="5dp"
                 android:text="COMMENT" />
+
         </LinearLayout>
 
     </LinearLayout>
