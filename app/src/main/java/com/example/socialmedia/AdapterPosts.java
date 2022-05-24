@@ -81,7 +81,7 @@ public class AdapterPosts extends RecyclerView.Adapter<com.example.socialmedia.A
         String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
         holder.name.setText(nameh);
         holder.title.setText(titlee);
-        holder.description.setText(descri);
+        holder.description.setText(descri); 
         holder.time.setText(timedate);
         holder.like.setText(plike + " Likes");
         holder.comments.setText(comm + " Comments");

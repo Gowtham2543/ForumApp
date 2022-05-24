@@ -270,8 +270,6 @@ public class AddBlogsFragment extends Fragment {
         storageReference1.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                //pd.dismiss();
-                //upload.setText("Yooooo");
                 // getting the url of image uploaded
                 Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
                 while (!uriTask.isSuccessful()) ;
