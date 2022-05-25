@@ -68,6 +68,7 @@ public class AdapterPosts extends RecyclerView.Adapter<com.example.socialmedia.A
         final String uid = modelPosts.get(position).getUid();
         String nameh = modelPosts.get(position).getUname();
         final String titlee = modelPosts.get(position).getTitle();
+        //System.out.println(titlee);
         final String descri = modelPosts.get(position).getDescription();
         final String ptime = modelPosts.get(position).getPtime();
         String dp = modelPosts.get(position).getUdp();
@@ -81,7 +82,7 @@ public class AdapterPosts extends RecyclerView.Adapter<com.example.socialmedia.A
         String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
         holder.name.setText(nameh);
         holder.title.setText(titlee);
-        holder.description.setText(descri); 
+        holder.description.setText(descri);
         holder.time.setText(timedate);
         holder.like.setText(plike + " Likes");
         holder.comments.setText(comm + " Comments");
@@ -97,6 +98,7 @@ public class AdapterPosts extends RecyclerView.Adapter<com.example.socialmedia.A
         } catch (Exception e) {
 
         }
+
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,6 +107,7 @@ public class AdapterPosts extends RecyclerView.Adapter<com.example.socialmedia.A
                 holder.itemView.getContext().startActivity(intent);
             }
         });
+
         holder.likebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,12 +137,15 @@ public class AdapterPosts extends RecyclerView.Adapter<com.example.socialmedia.A
                 });
             }
         });
+
         holder.more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showMoreOptions(holder.more, uid, myuid, ptime, image);
             }
         });
+
+
         holder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,7 +159,7 @@ public class AdapterPosts extends RecyclerView.Adapter<com.example.socialmedia.A
     private void showMoreOptions(ImageButton more, String uid, String myuid, final String pid, final String image) {
         PopupMenu popupMenu = new PopupMenu(context, more, Gravity.END);
         if (uid.equals(myuid)) {
-            popupMenu.getMenu().add(Menu.NONE, 0, 0, "DELETE");
+            popupMenu.getMenu().add(Menu.NONE, 0, 0, "Delete");
         }
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
@@ -171,11 +177,12 @@ public class AdapterPosts extends RecyclerView.Adapter<com.example.socialmedia.A
     private void deltewithImage(final String pid, String image) {
         final ProgressDialog pd = new ProgressDialog(context);
         pd.setMessage("Deleting");
+        pd.show();
         StorageReference picref = FirebaseStorage.getInstance().getReferenceFromUrl(image);
         picref.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Query query = FirebaseDatabase.getInstance().getReference("Posts").orderByChild("ptime").equalTo(pid);
+                Query query = FirebaseDatabase.getInstance("https://social-media-d83ed-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Posts").orderByChild("ptime").equalTo(pid);
                 query.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -185,6 +192,7 @@ public class AdapterPosts extends RecyclerView.Adapter<com.example.socialmedia.A
                         pd.dismiss();
                         Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_LONG).show();
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 

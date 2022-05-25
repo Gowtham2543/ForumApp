@@ -65,7 +65,7 @@ public class EditProfilePage extends AppCompatActivity {
     String uid;
     ImageView set;
     ImageView imageView;
-    TextView profilepic, editname, editpassword;
+    TextView profilepic, editname, editpassword, about;
     ProgressDialog pd;
     private static final int CAMERA_REQUEST = 100;
     private static final int STORAGE_REQUEST = 200;
@@ -84,6 +84,7 @@ public class EditProfilePage extends AppCompatActivity {
         profilepic = findViewById(R.id.profilepic);
         editname = findViewById(R.id.editname);
         set = findViewById(R.id.setting_profile_image);
+        about = findViewById(R.id.UpdateAbout);
         pd = new ProgressDialog(this);
         pd.setCanceledOnTouchOutside(false);
         editpassword = findViewById(R.id.changepassword);
@@ -99,7 +100,6 @@ public class EditProfilePage extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-
                     String image = "" + dataSnapshot1.child("image").getValue();
 
                     try {
@@ -139,6 +139,16 @@ public class EditProfilePage extends AppCompatActivity {
                 showNamephoneupdate("name");
             }
         });
+
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pd.setMessage("Updating about");
+                //showPasswordChangeDailog();
+                showAboutupdate("AboutMe");
+            }
+        });
+
 
     }
     @Override
@@ -353,6 +363,59 @@ public class EditProfilePage extends AppCompatActivity {
                             }
                         });
                     }
+                } else {
+                    Toast.makeText(EditProfilePage.this, "Unable to update", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                pd.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+    private void showAboutupdate(final String key) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Update about me");
+
+        // creating a layout to write the new name
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(10, 10, 10, 10);
+        final EditText editText = new EditText(this);
+        editText.setHint("Enter about you");
+        layout.addView(editText);
+        builder.setView(layout);
+
+        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                final String value = editText.getText().toString().trim();
+                if (!TextUtils.isEmpty(value)) {
+                    pd.show();
+
+                    // Here we are updating the about me
+                    HashMap<String, Object> result = new HashMap<>();
+                    result.put(key, value);
+                    databaseReference.child(firebaseUser.getUid()).updateChildren(result).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            pd.dismiss();
+
+                            // after updated we will show updated
+                            Toast.makeText(EditProfilePage.this, " updated ", Toast.LENGTH_LONG).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            pd.dismiss();
+                            Toast.makeText(EditProfilePage.this, "Unable to update", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 } else {
                     Toast.makeText(EditProfilePage.this, "Unable to update", Toast.LENGTH_LONG).show();
                 }

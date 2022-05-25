@@ -85,15 +85,15 @@ public class AddBlogsFragment extends Fragment {
         Intent intent = getActivity().getIntent();
 
         // Retrieving the user data like name ,email and profile pic using query
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-        Query query = databaseReference.orderByChild("email").equalTo(email);
+        databaseReference = FirebaseDatabase.getInstance("https://social-media-d83ed-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+        Query query = databaseReference.orderByChild("email").equalTo(firebaseAuth.getCurrentUser().getEmail());
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    name = dataSnapshot1.child("name").getValue().toString();
+                    name = "" + dataSnapshot1.child("name").getValue();
                     email = "" + dataSnapshot1.child("email").getValue();
-                    dp = "" + dataSnapshot1.child("image").getValue().toString();
+                    dp = "" + dataSnapshot1.child("image").getValue();
                 }
             }
 
@@ -277,8 +277,11 @@ public class AddBlogsFragment extends Fragment {
                 if (uriTask.isSuccessful()) {
                     // if task is successful the update the data into firebase
                     HashMap<Object, String> hashMap = new HashMap<>();
+                    uid = firebaseAuth.getCurrentUser().getUid();
                     hashMap.put("uid", uid);
                     hashMap.put("uname", name);
+                    System.out.println(name);
+                    System.out.println(name + "nfrnfirnfirn");
                     hashMap.put("uemail", email);
                     hashMap.put("udp", dp);
                     hashMap.put("title", titl);

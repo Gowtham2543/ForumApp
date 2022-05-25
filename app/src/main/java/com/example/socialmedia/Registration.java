@@ -93,6 +93,7 @@ public class Registration extends AppCompatActivity {
                     hashMap.put("onlineStatus", "online");
                     hashMap.put("typingTo", "noOne");
                     hashMap.put("image", "");
+                    hashMap.put("AboutMe", "Update your about me");
                     FirebaseDatabase database = FirebaseDatabase.getInstance("https://social-media-d83ed-default-rtdb.asia-southeast1.firebasedatabase.app");
                     DatabaseReference reference = database.getReference("Users");
                     reference.child(uid).setValue(hashMap);
