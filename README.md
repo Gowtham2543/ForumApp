@@ -1,2 +1,2 @@
 # Forum_App
-An android forum app developed for college students
+An android discussion forum app developed for college students
